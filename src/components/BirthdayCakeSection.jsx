@@ -284,7 +284,8 @@ export default function BirthdayCakeSection() {
       id="birthday-cake"
       className="section-wrapper"
       style={{
-        padding: '90px 20px',
+        padding: '100px 20px 80px',
+        scrollMarginTop: '90px',
         maxWidth: '820px',
         textAlign: 'center',
         position: 'relative'
@@ -1078,3 +1079,4 @@ export default function BirthdayCakeSection() {
     </section>
   );
 }
+

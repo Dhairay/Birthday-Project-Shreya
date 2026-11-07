@@ -7,7 +7,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   const navLinks = [
-    { id: 'birthday-cake', label: 'Make a Wish', icon: <span>🎂</span> },
+    { id: 'birthday-cake', label: 'Wish', icon: <span>🎂</span> },
     { id: 'hiking', label: 'Adventure', icon: <Compass size={15} /> },
     { id: 'hair-colors', label: 'Colors', icon: <Sparkles size={15} /> },
     { id: 'cricket', label: 'Cricket', icon: <Trophy size={15} /> },
@@ -97,7 +97,9 @@ export default function Navbar() {
                   color: isActive ? '#ffffff' : '#9ca3af',
                   background: isActive ? 'var(--accent-primary)' : 'transparent',
                   boxShadow: isActive ? '0 0 14px var(--accent-glow)' : 'none',
-                  transition: 'var(--transition-smooth)'
+                  transition: 'var(--transition-smooth)',
+                  whiteSpace: 'nowrap',
+                  flexShrink: 0
                 }}
               >
                 {link.icon}
