@@ -65,6 +65,7 @@ export default function BirthdayCakeSection() {
   const [permissionState, setPermissionState] = useState('idle'); // 'idle' | 'requesting' | 'active' | 'denied'
   const [hasCamera, setHasCamera] = useState(false);
   const [cameraActive, setCameraActive] = useState(true);
+  const [isVideoReady, setIsVideoReady] = useState(false);
   const [blowIntensity, setBlowIntensity] = useState(0);
   const [showWishMessage, setShowWishMessage] = useState(false);
 
@@ -79,6 +80,37 @@ export default function BirthdayCakeSection() {
   useEffect(() => {
     isBlownOutRef.current = isBlownOut;
   }, [isBlownOut]);
+
+  // Callback ref to bind video stream the exact instant the video node mounts
+  const attachVideoNode = (node) => {
+    videoRef.current = node;
+    if (node && mediaStreamRef.current) {
+      const videoTracks = mediaStreamRef.current.getVideoTracks();
+      if (videoTracks.length > 0) {
+        if (node.srcObject !== mediaStreamRef.current) {
+          node.srcObject = mediaStreamRef.current;
+        }
+        node.play().catch((err) => {
+          console.log('Video play error on attach:', err);
+        });
+      }
+    }
+  };
+
+  // Re-verify video stream on state changes
+  useEffect(() => {
+    if (permissionState === 'active' && hasCamera && videoRef.current && mediaStreamRef.current) {
+      const videoTracks = mediaStreamRef.current.getVideoTracks();
+      if (videoTracks.length > 0) {
+        if (videoRef.current.srcObject !== mediaStreamRef.current) {
+          videoRef.current.srcObject = mediaStreamRef.current;
+        }
+        videoRef.current.play().catch((err) => {
+          console.log('Video play error on effect:', err);
+        });
+      }
+    }
+  }, [permissionState, hasCamera, cameraActive]);
 
   // Clean up media streams and audio contexts on unmount
   useEffect(() => {
@@ -391,19 +423,42 @@ export default function BirthdayCakeSection() {
                   }}
                 >
                   <video
-                    ref={videoRef}
+                    ref={attachVideoNode}
                     autoPlay
                     playsInline
                     muted
+                    onLoadedData={() => setIsVideoReady(true)}
+                    onPlaying={() => setIsVideoReady(true)}
                     style={{
                       width: '100%',
                       height: '100%',
                       objectFit: 'cover',
                       transform: 'scaleX(-1)', // Mirrored for authentic selfie reflection
                       filter: 'brightness(1.05) contrast(1.02) saturate(1.08)',
-                      display: cameraActive ? 'block' : 'none'
+                      display: cameraActive ? 'block' : 'none',
+                      opacity: isVideoReady ? 1 : 0,
+                      transition: 'opacity 0.35s ease'
                     }}
                   />
+                  {!isVideoReady && cameraActive && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '10px',
+                        color: '#fbbf24',
+                        background: '#070b14',
+                        fontSize: '0.8rem'
+                      }}
+                    >
+                      <Sparkles size={24} color="#fbbf24" style={{ animation: 'twinkle 1.5s ease-in-out infinite' }} />
+                      <span>Starting Magic Mirror...</span>
+                    </div>
+                  )}
                   {!cameraActive && (
                     <div
                       style={{
