@@ -383,7 +383,7 @@ export default function BirthdayCakeSection() {
             lineHeight: 1.6
           }}
         >
-          Close your eyes, make a secret wish for the year ahead, and blow into your microphone to extinguish the flames!
+          Close your eyes, make a secret wish for the year ahead, and blow to extinguish the flames! ✨
         </p>
 
         {/* ─── LIVE MAGIC WISH MIRROR (CAMERA FEED) ─── */}
@@ -474,12 +474,12 @@ export default function BirthdayCakeSection() {
                       }}
                     >
                       <CameraOff size={28} />
-                      <span>Camera Paused</span>
+                      <span>Mirror Paused</span>
                     </div>
                   )}
                 </div>
 
-                {/* Camera Toggle Button */}
+                {/* Mirror Toggle Button */}
                 <button
                   onClick={toggleCameraStream}
                   style={{
@@ -499,8 +499,8 @@ export default function BirthdayCakeSection() {
                     boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
                     zIndex: 10
                   }}
-                  title={cameraActive ? 'Turn off camera' : 'Turn on camera'}
-                  aria-label="Toggle camera stream"
+                  title={cameraActive ? 'Pause mirror' : 'Resume mirror'}
+                  aria-label="Toggle wish mirror"
                 >
                   {cameraActive ? <Camera size={15} /> : <CameraOff size={15} />}
                 </button>
@@ -531,7 +531,7 @@ export default function BirthdayCakeSection() {
                     boxShadow: '0 0 8px #22c55e'
                   }}
                 />
-                <span>Live Wish Mirror</span>
+                <span>Magic Wish Mirror ✨</span>
               </div>
             </motion.div>
           )}
@@ -576,7 +576,7 @@ export default function BirthdayCakeSection() {
                     ? '💨 Blowing detected! Keep blowing...'
                     : blowIntensity > 0.15
                     ? '🌬️ Breath felt! A little stronger...'
-                    : '🎙️ Mic active: Blow directly into microphone!'}
+                    : '🌬️ Make your wish and blow towards the screen...'}
                 </span>
               </div>
 
@@ -967,7 +967,7 @@ export default function BirthdayCakeSection() {
 
         {/* ─── ACTION CONTROLS & WISH REVEAL ─── */}
         <div style={{ minHeight: '80px', marginTop: '10px' }}>
-          {/* State 1: Candles are lit & Mic is not yet active */}
+          {/* State 1: Candles are lit & not yet blown */}
           {!isBlownOut && permissionState !== 'active' && (
             <motion.div
               initial={{ opacity: 0, y: 15 }}
@@ -976,7 +976,7 @@ export default function BirthdayCakeSection() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: '14px'
+                gap: '12px'
               }}
             >
               <button
@@ -987,40 +987,35 @@ export default function BirthdayCakeSection() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '10px',
-                  padding: '14px 32px',
-                  fontSize: 'clamp(0.95rem, 2.5vw, 1.08rem)',
+                  padding: '14px 34px',
+                  fontSize: 'clamp(1rem, 2.6vw, 1.12rem)',
                   boxShadow: '0 0 25px rgba(245, 158, 11, 0.45)',
                   cursor: permissionState === 'requesting' ? 'wait' : 'pointer'
                 }}
-                aria-label="Enable microphone and camera to blow candles"
+                aria-label="Click here to blow"
               >
-                <Mic size={18} />
+                <Wind size={18} />
                 <span>
                   {permissionState === 'requesting'
-                    ? 'Connecting Camera & Mic...'
-                    : 'Turn On Mic & Camera to Blow 🎙️📸'}
+                    ? 'Making your wish...'
+                    : 'Click here to blow 🎂💨'}
                 </span>
-                <Flame size={18} />
+                <Sparkles size={16} />
               </button>
 
-              <button
-                onClick={triggerBlowOut}
+              <div
                 style={{
-                  background: 'none',
-                  border: 'none',
-                  color: 'rgba(255, 255, 255, 0.55)',
-                  fontSize: '0.85rem',
-                  textDecoration: 'underline',
-                  cursor: 'pointer',
+                  color: 'rgba(255, 255, 255, 0.5)',
+                  fontSize: '0.82rem',
                   letterSpacing: '0.03em'
                 }}
               >
-                Or tap anywhere on the cake to blow manually 💨
-              </button>
+                ✨ Make your wish and blow out the candles
+              </div>
             </motion.div>
           )}
 
-          {/* State 2: Mic & Camera active, waiting for blow */}
+          {/* State 2: Active, waiting for blow or click */}
           {!isBlownOut && permissionState === 'active' && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -1034,18 +1029,21 @@ export default function BirthdayCakeSection() {
             >
               <button
                 onClick={triggerBlowOut}
-                className="btn-glass"
+                className="btn-primary"
                 style={{
-                  padding: '10px 24px',
-                  fontSize: '0.88rem',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  cursor: 'pointer'
+                  gap: '10px',
+                  padding: '14px 34px',
+                  fontSize: 'clamp(1rem, 2.6vw, 1.12rem)',
+                  cursor: 'pointer',
+                  boxShadow: '0 0 25px rgba(245, 158, 11, 0.45)'
                 }}
+                aria-label="Click here to blow"
               >
-                <Wind size={15} />
-                <span>Tap here to blow manually if mic is quiet 💨</span>
+                <Wind size={18} />
+                <span>Click here to blow 🎂💨</span>
+                <Sparkles size={16} />
               </button>
             </motion.div>
           )}
