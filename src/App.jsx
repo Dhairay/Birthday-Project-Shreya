@@ -6,6 +6,7 @@ import BackgroundStars from './components/BackgroundStars';
 import IntroScreen from './components/IntroScreen';
 import Navbar from './components/Navbar';
 import BirthdayReveal from './components/BirthdayReveal';
+import BirthdayCakeSection from './components/BirthdayCakeSection';
 import AdventureSection from './components/AdventureSection';
 import HairColorGame from './components/HairColorGame';
 import CricketSection from './components/CricketSection';
@@ -41,7 +42,7 @@ export default function App() {
   };
 
   const handleExploreMore = () => {
-    const el = document.getElementById('hiking');
+    const el = document.getElementById('birthday-cake');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
@@ -94,6 +95,9 @@ export default function App() {
             <main style={{ position: 'relative', zIndex: 1 }}>
               {/* Section 1: Birthday Reveal (with Her Photo) */}
               <BirthdayReveal onExploreMore={handleExploreMore} />
+
+              {/* Section 1.5: Birthday Cake & Wishing Candles */}
+              <BirthdayCakeSection />
 
               {/* Section 2: Hiking & Mountain Adventure */}
               {birthdayConfig.interests.hiking.enabled && (

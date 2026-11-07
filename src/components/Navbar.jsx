@@ -7,6 +7,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   const navLinks = [
+    { id: 'birthday-cake', label: 'Make a Wish', icon: <span>🎂</span> },
     { id: 'hiking', label: 'Adventure', icon: <Compass size={15} /> },
     { id: 'hair-colors', label: 'Colors', icon: <Sparkles size={15} /> },
     { id: 'cricket', label: 'Cricket', icon: <Trophy size={15} /> },
@@ -24,7 +25,7 @@ export default function Navbar() {
       setScrolled(window.scrollY > 80);
 
       // Section spy
-      const sections = ['hiking', 'hair-colors', 'cricket', 'tennis', 'naples', 'pizza', 'bracelets', 'santorini', 'chocolate', 'final-letter'];
+      const sections = ['birthday-cake', 'hiking', 'hair-colors', 'cricket', 'tennis', 'naples', 'pizza', 'bracelets', 'santorini', 'chocolate', 'final-letter'];
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
         if (el) {
